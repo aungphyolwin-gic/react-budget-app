@@ -8,6 +8,7 @@ import Main, { mainLoader } from "./layouts/Main";
 import { logoutAction } from "./actions/logout";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import ExpensePage, { expensesLoader } from "./pages/ExpensePage";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,11 @@ const router = createBrowserRouter([
                 element: <Dashboard/>,
                 loader: dashboardLoader,
                 action: dashboardAction
+              },
+              {  
+                path: "expenses",
+                element: <ExpensePage/>,
+                loader: expensesLoader,
               },
               {  
                 path: "logout",
