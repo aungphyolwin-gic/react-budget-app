@@ -8,7 +8,9 @@ import Main, { mainLoader } from "./layouts/Main";
 import { logoutAction } from "./actions/logout";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import ExpensePage, { expensesLoader } from "./pages/ExpensePage";
+import ExpensePage, { expensesAction, expensesLoader } from "./pages/ExpensePage";
+import { budgetAction, budgetLoader, BudgetPage } from "./pages/BudgetPage";
+import deleteBudget from "./actions/deleteBudget";
 
 const router = createBrowserRouter([
   {
@@ -21,12 +23,28 @@ const router = createBrowserRouter([
                 index: true,
                 element: <Dashboard/>,
                 loader: dashboardLoader,
-                action: dashboardAction
+                action: dashboardAction,
+                errorElement: <Error/>,
+              },
+              {  
+                path: "budget/:id",
+                element: <BudgetPage/>,
+                loader: budgetLoader,
+                action: budgetAction,
+                errorElement: <Error/>,
+                children:[
+                  {
+                    path: "delete",
+                    action: deleteBudget,
+                  }
+                ]
               },
               {  
                 path: "expenses",
                 element: <ExpensePage/>,
                 loader: expensesLoader,
+                action: expensesAction,
+                errorElement: <Error/>,
               },
               {  
                 path: "logout",

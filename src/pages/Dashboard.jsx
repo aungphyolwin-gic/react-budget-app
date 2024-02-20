@@ -1,6 +1,6 @@
 import React from 'react'
 //helper function
-import { createBudget, createExpense, fetchData, waait } from '../Helper'
+import { createBudget, createExpense, deleteItem, fetchData, waait } from '../Helper'
 import { Link, useLoaderData } from 'react-router-dom';
 import { Intro } from '../components/Intro';
 import { toast } from 'react-toastify';
@@ -67,6 +67,21 @@ export async function dashboardAction({request}){
             throw new Error("There's a problem creating new Expense.")
         }
     }
+
+    //delete expense 
+    if(_action === "deleteExpense")
+    {
+        try {
+            //remove expense data
+            deleteItem({
+                key : "expenses",
+                id :  values.expenseId 
+            })
+            return toast.success('Expense deleted.')
+        } catch (error) {
+            throw new Error("There's a problem in deleting Expense.")
+        }
+    }
     
 }
 
@@ -100,7 +115,7 @@ const Dashboard = ()=>{
                                         <div className="grid-md">
                                             <h2>Recent Expenses</h2>
                                             <Table expenses={
-                                                expenses.sort((a,b) => a.createdAt - b.createdAt)
+                                                expenses.sort((a,b) =>b.createdAt - a.createdAt)
                                                         .slice(0,8)
                                             } />
                                             {
